@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Infrastructure.Repositories.Implementations;
+using Infrastructure.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
 {
-    internal class ServiceCollection
+    public static class ServiceCollection
     {
+        public static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        }
     }
 }
