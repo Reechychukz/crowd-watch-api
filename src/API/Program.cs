@@ -1,3 +1,4 @@
+using Application.Helpers;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,6 @@ public class Program
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(builder =>
             {
-                //builder.RegisterModule(new AutofacContainerModule());
+                builder.RegisterModule(new AutofacContainerModule());
             });
 }

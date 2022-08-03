@@ -13,3 +13,5 @@ C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastr
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastructure.Data\obj\Debug\net6.0\refint\Infrastructure.Data.dll
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastructure.Data\obj\Debug\net6.0\Infrastructure.Data.pdb
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastructure.Data\obj\Debug\net6.0\ref\Infrastructure.Data.dll
+C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastructure.Data\bin\Debug\net6.0\Infrastructure.Data.runtimeconfig.json
+C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\Infrastructure.Data\obj\Debug\net6.0\Infrastructure.Data.genruntimeconfig.cache

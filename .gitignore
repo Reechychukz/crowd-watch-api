@@ -399,6 +399,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 appsettings.Development.json
+Migrations/
+.ionide
+src/.DS_Store
+src/API/.DS_Store
+src/API/appsettings.Development.json
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio

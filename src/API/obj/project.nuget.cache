@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/Y17D9y61oyaKBKfR/2whfrcHzTjij5ES6fkF4SvD+qh6dKRe1j7oJmTuEjSqbJIU71lGAeo3bYuL8N5O+5zzA==",
+  "dgSpecHash": "LUAuQlzpSm2R/eptSbtdbCpkgpxr+LNMAke9Cpo1AHzHvOkgD/ynSMVf7tIqFAxoU+CVDRvqVka2EoUOFVAqag==",
   "success": true,
   "projectFilePath": "C:\\Users\\Richard\\source\\repos\\personal\\asp.net core\\crowd-watch-api\\src\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Richard\\.nuget\\packages\\autofac\\6.4.0\\autofac.6.4.0.nupkg.sha512",
     "C:\\Users\\Richard\\.nuget\\packages\\autofac.extensions.dependencyinjection\\8.0.0\\autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
-    "C:\\Users\\Richard\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
+    "C:\\Users\\Richard\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Richard\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Richard\\.nuget\\packages\\fluentvalidation\\11.1.0\\fluentvalidation.11.1.0.nupkg.sha512",
     "C:\\Users\\Richard\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.1.2\\fluentvalidation.aspnetcore.11.1.2.nupkg.sha512",

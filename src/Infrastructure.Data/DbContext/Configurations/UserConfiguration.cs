@@ -9,10 +9,10 @@ namespace Infrastructure.Data.DbContext.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasIndex(x => x.Email).IsUnique();
+            builder.HasIndex(x => x.UserName).IsUnique();
 
             builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.FirstName).IsRequired();
-            builder.Property(x => x.LastName).IsRequired();
+            builder.Property(x => x.UserName).IsRequired();          
         }
 
         public static void ApplyUserIdentityConfigurations(ModelBuilder builder)
