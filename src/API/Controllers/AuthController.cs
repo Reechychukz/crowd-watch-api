@@ -37,6 +37,21 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Endpoint to login a user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(SuccessResponse<UserLoginResponse>), 200)]
+        public async Task<IActionResult> LoginUser(UserLoginDTO model)
+        {
+            var response = await _userService.UserLogin(model);
+
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Endpoint to get a user
         /// </summary>
         /// <param name="id"></param>

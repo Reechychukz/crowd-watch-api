@@ -1,6 +1,7 @@
 using Application.Helpers;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Infrastructure.Data.DbContext;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

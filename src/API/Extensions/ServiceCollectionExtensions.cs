@@ -1,6 +1,7 @@
 ﻿using API.Configurations;
 using API.Middlewares;
 using Application.AuditServices;
+using Application.DTOs;
 using Application.Validations;
 using Domain.Entities.Identities;
 using FluentValidation.AspNetCore;
@@ -110,7 +111,7 @@ namespace API.Extensions
         {
             //services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
             //services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
-            //services.Configure<JwtConfigSettings>(configuration.GetSection("JwtSettings"));
+            services.Configure<JwtConfigSettings>(configuration.GetSection("JwtSettings"));
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

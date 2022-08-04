@@ -21,14 +21,16 @@ namespace Application.Services.Implementations
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
 
-        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager)
+        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _userRepository = userRepository;
             _userActivityRepository = userActivityRepository;
             _userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
+            _jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
         public async Task<SuccessResponse<UserDto>> CreateUser(UserSignupDto model, List<string> roles = null)
@@ -74,6 +76,50 @@ namespace Application.Services.Implementations
             {
                 Message = ResponseMessages.CreationSuccessResponse,
                 Data = userResponse
+            };
+        }
+
+        public async Task<SuccessResponse<UserLoginResponse>> UserLogin(UserLoginDTO model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
+
+            // ReSharper disable once HeapView.BoxingAllocation
+            //if (!user.EmailConfirmed || user?.Status?.ToUpper() != EUserStatus.ACTIVE.ToString() || !user.Verified)
+            //    throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
+
+            var isUserValid = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!isUserValid)
+                throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
+
+            user.LastLogin = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
+
+            var userActivity = new UserActivity
+            {
+                EventType = "User Login",
+                UserId = user.Id,
+                ObjectClass = "USER",
+                Details = "logged in",
+                ObjectId = user.Id
+            };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userActivityRepository.AddAsync(userActivity);
+            await _userActivityRepository.SaveChangesAsync();
+
+            var userViewModel = _mapper.Map<UserLoginResponse>(user);
+
+            var tokenResponse = _jwtAuthenticationManager.Authenticate(user, roles);
+            userViewModel.AccessToken = tokenResponse.AccessToken;
+            userViewModel.ExpiresIn = tokenResponse.ExpiresIn;
+            userViewModel.RefreshToken = _jwtAuthenticationManager.GenerateRefreshToken(user.Id);
+
+            return new SuccessResponse<UserLoginResponse>
+            {
+                Message = ResponseMessages.LoginSuccessResponse,
+                Data = userViewModel
             };
         }
 

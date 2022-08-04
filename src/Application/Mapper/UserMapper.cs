@@ -15,6 +15,9 @@ namespace Application.Mapper
 
             CreateMap<User, UserByIdDto>();
             CreateMap<User, UserDto>();
+
+            CreateMap<User, UserLoginResponse>().ReverseMap();
+
         }
     }
 }
