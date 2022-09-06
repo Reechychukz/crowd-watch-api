@@ -15,8 +15,8 @@ public class Program
         using var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
 
-        //DbInitializer.SeedRoleData(services).Wait();
-        //DbInitializer.SeedSuperUser(services).Wait();
+        DbInitializer.SeedRoleData(services).Wait();
+        DbInitializer.SeedSuperUser(services).Wait();
 
         CreateHostBuilder(args).Build().Run();
     }
