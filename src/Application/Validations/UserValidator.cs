@@ -11,7 +11,7 @@ namespace Application.Validations
             RuleFor(x => x.UserName).NotEmpty();
             RuleFor(x => x.Password).Matches(@"(?-i)(?=^.{8,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))((?=(.*\d){1,})|(?=(.*\W){1,}))^.*$")
                 .WithMessage(@"Password must be at least 8 characters, at least 1 upper case letters (A – Z), Atleast 1 lower case letters (a – z), Atleast 1 number (0 – 9) or non-alphanumeric symbol (e.g. @ '$%£! ')");
-            RuleFor(x => x.ComfirmPassword).NotEmpty().Equal(comparer => comparer.Password)
+            RuleFor(x => x.ConfirmPassword).NotEmpty().Equal(comparer => comparer.Password)
                 .WithMessage(@"Passwords do not match");
         }
     }
