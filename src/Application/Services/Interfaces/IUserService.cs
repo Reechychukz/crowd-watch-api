@@ -11,5 +11,6 @@ namespace Application.Services.Interfaces
         Task<SuccessResponse<UserDto>> CreateUser(UserSignupDto model, List<string> roles = null);
         Task<SuccessResponse<UserByIdDto>> GetUserById(Guid userId);
         Task<SuccessResponse<UserLoginResponse>> UserLogin(UserLoginDTO model);
+        Task<Response> AddFriend(string friendEmailAddress);
     }
 }

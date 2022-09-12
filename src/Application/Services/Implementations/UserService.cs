@@ -3,6 +3,7 @@ using Application.Helpers;
 using Application.Services.Interfaces;
 using AutoMapper;
 using Domain.Common;
+using Domain.Entities;
 using Domain.Entities.Identities;
 using Domain.Enums;
 using Infrastructure.Repositories.Interfaces;
@@ -18,12 +19,13 @@ namespace Application.Services.Implementations
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<UserActivity> _userActivityRepository;
+        private readonly IRepository<UserFriend> _userFriendRepository;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly RoleManager<Role> _roleManager;
         private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
 
-        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager)
+        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager, IRepository<UserFriend> userFriendRepository)
         {
             _userRepository = userRepository;
             _userActivityRepository = userActivityRepository;
@@ -31,6 +33,7 @@ namespace Application.Services.Implementations
             _mapper = mapper;
             _roleManager = roleManager;
             _jwtAuthenticationManager = jwtAuthenticationManager;
+            _userFriendRepository = userFriendRepository;
         }
 
         public async Task<SuccessResponse<UserDto>> CreateUser(UserSignupDto model, List<string> roles = null)
@@ -86,8 +89,8 @@ namespace Application.Services.Implementations
                 throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
 
             // ReSharper disable once HeapView.BoxingAllocation
-            //if (!user.EmailConfirmed || user?.Status?.ToUpper() != EUserStatus.ACTIVE.ToString() || !user.Verified)
-            //    throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
+            if (!user.EmailConfirmed || user?.Status?.ToUpper() != EUserStatus.ACTIVE.ToString() || !user.Verified)
+                throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
 
             var isUserValid = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!isUserValid)
@@ -144,6 +147,32 @@ namespace Application.Services.Implementations
             };
         }
 
+        public async Task<Response> AddFriend(string friendEmailAddress)
+        {
+            var user = await _userRepository.GetByIdAsync(WebHelper.UserId);
+            var friendUser = await _userRepository.FirstOrDefault(x => x.Email == friendEmailAddress);
+
+            var newFiendRequest = new UserFriend
+            {
+                RequestedById = WebHelper.UserId,
+                RequestedToId = friendUser.Id,
+                RequestedBy = user,
+                RequestedTo = friendUser,
+                RequestTime = DateTime.UtcNow,
+                FriendRequestFlag = EFriendRequestFlag.PENDING,
+            };
+
+            user.SentFriendRequests.Add(newFiendRequest);
+            friendUser.ReceievedFriendRequests.Add(newFiendRequest);
+
+            await _userFriendRepository.SaveChangesAsync();
+
+            return new Response
+            {
+                Message = ResponseMessages.RetrievalSuccessResponse,
+                Success = true
+            };
+        }
 
         #region Private Functions
         private async Task AddUserToRoles(User user, IEnumerable<string> roles)

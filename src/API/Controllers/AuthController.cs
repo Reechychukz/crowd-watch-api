@@ -37,6 +37,21 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Endpoint to verify a user email address
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("complete-registration")]
+        [ProducesResponseType(typeof(SuccessResponse<object>), 201)]
+        public async Task<IActionResult> ComfirmUserEmailAddres(VerifyTokenDTO model)
+        {
+            var response = await _userService.CompleteUserRegistration(model);
+
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Endpoint to login a user
         /// </summary>
         /// <param name="model"></param>

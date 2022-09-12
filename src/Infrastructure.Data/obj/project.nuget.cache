@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "u5+iKimQ01bvZ3H7e6wGZF/X2VhUjQm5jCAmiYOUrjce5KI1dovEDANpu4CpDWXdlCmhzvUJC/IrF9TGUhaCKA==",
+  "dgSpecHash": "rYgEjXyKrGhngMBpivlu1DgH5553PdQu29PFjN2FTpuDoT04MGZHQC5kOXI475Xn4JWL7TyRLqFjQIF+EaZn0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Richard\\source\\repos\\personal\\asp.net core\\crowd-watch-api\\src\\Infrastructure.Data\\Infrastructure.Data.csproj",
   "expectedPackageFiles": [
