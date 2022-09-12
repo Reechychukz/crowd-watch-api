@@ -38,6 +38,9 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+.vscode/
+.env
+.store/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -407,6 +410,7 @@ Migrations/
 src/.DS_Store
 src/API/.DS_Store
 src/API/appsettings.Development.json
+src/API/bin
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
