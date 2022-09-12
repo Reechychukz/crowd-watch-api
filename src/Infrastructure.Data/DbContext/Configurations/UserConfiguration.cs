@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Identities;
+﻿using Domain.Entities;
+using Domain.Entities.Identities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,7 +13,8 @@ namespace Infrastructure.Data.DbContext.Configurations
             builder.HasIndex(x => x.UserName).IsUnique();
 
             builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.UserName).IsRequired();          
+            builder.Property(x => x.UserName).IsRequired();     
+            
         }
 
         public static void ApplyUserIdentityConfigurations(ModelBuilder builder)
@@ -51,6 +53,21 @@ namespace Infrastructure.Data.DbContext.Configurations
             builder.Entity<UserToken>(entity =>
             {
                 entity.ToTable("UserToken");
+            });
+
+            builder.Entity<UserFriendship>(b =>
+            {
+                b.HasKey(x => new { x.UserId, x.UserFriendId });
+
+                b.HasOne(x => x.User)
+                    .WithMany(x => x.Friends)
+                    .HasForeignKey(x => x.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(x => x.UserFriend)
+                    .WithMany(x => x.FriendsOf)
+                    .HasForeignKey(x => x.UserFriendId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

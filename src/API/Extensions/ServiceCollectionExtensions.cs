@@ -41,6 +41,11 @@ namespace API.Extensions
             });
         }
 
+        public static void ConfigureIisIntegration(this IServiceCollection services)
+        {
+            services.Configure<IISOptions>(options => { });
+        }
+
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             var builder = services.AddIdentityCore<User>(opts =>
@@ -109,8 +114,7 @@ namespace API.Extensions
         /// <param name="configuration"></param>
         public static void ConfigureIOObjects(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
-            //services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
+            services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
             services.Configure<JwtConfigSettings>(configuration.GetSection("JwtSettings"));
         }
 
@@ -143,11 +147,6 @@ namespace API.Extensions
                             new string[] {}
                     }
                 });
-
-                // TODO: Fix the Docker error on this
-                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                // c.IncludeXmlComments(xmlPath);
             });
         }
 
