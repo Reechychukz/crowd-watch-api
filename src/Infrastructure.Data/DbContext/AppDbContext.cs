@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 using Domain.Entities.Identities;
 using Infrastructure.Data.DbContext.Configurations;
 using Infrastructure.Data.DbContext.DbAuditFilters;
@@ -68,5 +69,6 @@ namespace Infrastructure.Data.DbContext
 
         public override DbSet<User> Users { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }
