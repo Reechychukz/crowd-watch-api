@@ -395,6 +395,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+*.dll
+*.apk
+*.mdb
 
 # JetBrains Rider
 *.sln.iml
