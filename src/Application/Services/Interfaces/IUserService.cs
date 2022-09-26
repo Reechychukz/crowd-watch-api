@@ -14,6 +14,6 @@ namespace Application.Services.Interfaces
         Task<SuccessResponse<UserLoginResponse>> UserLogin(UserLoginDTO model);
 
         Task<SuccessResponse<object>> VerifyToken(VerifyTokenDTO model);
-        Task<Response> AddFriend(string friendEmailAddress);
+        Task<SuccessResponse<object>> AddFriend(Guid loggedInUserId, string friendEmailAddress);
     }
 }

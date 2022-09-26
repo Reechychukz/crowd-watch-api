@@ -29,9 +29,8 @@ namespace Application.Services.Implementations
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly IMailService _mailService;
         private readonly IConfiguration _configuration;
-        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager, IRepository<Token> tokenRepository, IEmailTemplateService emailTemplateService, IConfiguration configuration, IMailService mailService)
 
-        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager, IRepository<UserFriend> userFriendRepository)
+        public UserService(IRepository<User> userRepository, IRepository<UserActivity> userActivityRepository, UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager, IJwtAuthenticationManager jwtAuthenticationManager, IRepository<Token> tokenRepository, IEmailTemplateService emailTemplateService, IConfiguration configuration, IMailService mailService, IRepository<UserFriend> userFriendRepository)
         {
             _userRepository = userRepository;
             _userActivityRepository = userActivityRepository;
@@ -125,6 +124,7 @@ namespace Application.Services.Implementations
 
             user.EmailConfirmed = true;
             user.Verified = true;
+            user.Status = EUserStatus.ACTIVE.ToString();
             _userRepository.Update(user);
 
             await _userRepository.SaveChangesAsync();
@@ -142,9 +142,6 @@ namespace Application.Services.Implementations
                 throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
 
             //ReSharper disable once HeapView.BoxingAllocation
-            if (!user.EmailConfirmed || user?.Status?.ToUpper() != EUserStatus.ACTIVE.ToString() || !user.Verified)
-                throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
-            // ReSharper disable once HeapView.BoxingAllocation
             if (!user.EmailConfirmed || user?.Status?.ToUpper() != EUserStatus.ACTIVE.ToString() || !user.Verified)
                 throw new RestException(HttpStatusCode.NotFound, ResponseMessages.WrongEmailOrPassword);
 
@@ -223,19 +220,20 @@ namespace Application.Services.Implementations
                 Message = ResponseMessages.TokenVerificationSuccessResponse
             };
         }
-        public async Task<Response> AddFriend(string friendEmailAddress)
+        public async Task<SuccessResponse<object>> AddFriend(Guid loggedInUserId, string friendEmailAddress)
         {
-            var user = await _userRepository.GetByIdAsync(WebHelper.UserId);
+            var user = await _userRepository.GetByIdAsync(loggedInUserId);
             var friendUser = await _userRepository.FirstOrDefault(x => x.Email == friendEmailAddress);
 
             var newFiendRequest = new UserFriend
             {
-                RequestedById = WebHelper.UserId,
+                RequestedById = user.Id,
                 RequestedToId = friendUser.Id,
                 RequestedBy = user,
                 RequestedTo = friendUser,
                 RequestTime = DateTime.UtcNow,
                 FriendRequestFlag = EFriendRequestFlag.PENDING,
+                CreatedById = user.Id
             };
 
             user.SentFriendRequests.Add(newFiendRequest);
@@ -243,10 +241,9 @@ namespace Application.Services.Implementations
 
             await _userFriendRepository.SaveChangesAsync();
 
-            return new Response
+            return new SuccessResponse<object>
             {
-                Message = ResponseMessages.RetrievalSuccessResponse,
-                Success = true
+                Message = ResponseMessages.RetrievalSuccessResponse
             };
         }
 
