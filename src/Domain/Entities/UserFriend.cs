@@ -9,9 +9,7 @@ namespace Domain.Entities
 {
     public class UserFriend : AuditableEntity
     {
-        [Key, Column(Order = 0)]
         public Guid RequestedById { get; set;}
-        [Key, Column(Order = 1)]
         public Guid RequestedToId { get; set;}
         public Guid UserFriendId { get; set; }
         public virtual User RequestedBy { get; set; }
@@ -19,6 +17,7 @@ namespace Domain.Entities
         public DateTime? RequestTime { get; set; }
         public DateTime? BecameFriendsTime { get; set; }
         public EFriendRequestFlag FriendRequestFlag { get; set; }
+        [NotMapped]
         public bool Approved => FriendRequestFlag == EFriendRequestFlag.APPROVED;
     }
 }
