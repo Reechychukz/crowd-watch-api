@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace Domain.Entities.Identities
@@ -26,7 +27,7 @@ namespace Domain.Entities.Identities
         //Friends Navigation Properties
         public virtual ICollection<UserFriend> SentFriendRequests { get; set; }
         public virtual ICollection<UserFriend> ReceievedFriendRequests { get; set; }
-
+        [NotMapped]
         public virtual ICollection<UserFriend> Friends
         {
             get

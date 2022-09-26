@@ -55,19 +55,10 @@ namespace Infrastructure.Data.DbContext.Configurations
                 entity.ToTable("UserToken");
             });
 
-            builder.Entity<UserFriendship>(b =>
+            builder.Entity<UserFriend>(b =>
             {
-                b.HasKey(x => new { x.UserId, x.UserFriendId });
-
-                b.HasOne(x => x.User)
-                    .WithMany(x => x.Friends)
-                    .HasForeignKey(x => x.UserId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                b.HasOne(x => x.UserFriend)
-                    .WithMany(x => x.FriendsOf)
-                    .HasForeignKey(x => x.UserFriendId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                b.HasKey(x => new { x.RequestedById, x.RequestedToId });
+                
             });
         }
     }
