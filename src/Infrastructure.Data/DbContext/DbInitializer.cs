@@ -56,7 +56,8 @@ namespace Infrastructure.Data.DbContext
                 Verified = true,
                 UpdatedAt = DateTime.Now,
                 Email = "richardchukwuma99@gmail.com",
-                PhoneNumber = "+2348XXXXX2363"
+                PhoneNumber = "+2348XXXXX2363",
+                EmailConfirmed = true
             };
             superUser.UserName = superUser.Email;
             superUser.Verified = true;

@@ -52,7 +52,6 @@ C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\API.AssemblyInfo.cs
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
-C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\Richard\source\repos\personal\asp.net core\crowd-watch-api\src\API\obj\Debug\net6.0\staticwebassets.development.json
