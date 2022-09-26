@@ -15,5 +15,6 @@
         public const string MissingClaim = "MissingClaim:";
         public const string EmailAlreadyVerified = "Email already verified";
         public const string ExpiredToken = "Token expired";
+        public const string FriendRequestSuccessResponse = "Friend request sent successfully";
     }
 }
